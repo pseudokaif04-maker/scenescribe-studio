@@ -2,6 +2,8 @@
 
 **Every frame has something to say.**
 
+A local-first video caption studio unified with ClipForge. ClipForge turns long YouTube/Twitch videos into short clips, and SceneScribe reads each clip’s frames, audio, speech, and on-screen text to generate six platform-shaped caption directions. Everything runs locally — no accounts, no cloud AI, no footage uploads. Built with Python, Starlette, FFmpeg, faster-whisper, RapidOCR, and a custom editorial web UI.
+
 SceneScribe is a local-first video caption studio, now unified with ClipForge. Drop in a cut and it watches the frames, listens to the mix and voice, reads the words already on screen, then writes six caption directions that belong to that specific edit. You can also start from a YouTube or Twitch link: ClipForge cuts the replayable moments into a clip deck, and each clip opens in the same caption studio.
 
 No account. No API key. No footage sent to a cloud service.
