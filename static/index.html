@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f3f0e8">
+  <meta name="description" content="SceneScribe reads your video's frames, sound, speech, and on-screen text, then writes captions that belong to the edit. ClipForge can turn a YouTube or Twitch link into short clips first — all locally.">
+  <title>SceneScribe Studio — every frame has something to say</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/static/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body data-mode="landing">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <noscript>
+    <p class="noscript-note">SceneScribe needs JavaScript to read videos and generate captions. Enable it, then reload this page.</p>
+  </noscript>
+
+  <header class="site-header" id="siteHeader">
+    <div class="shell header-inner">
+      <a class="brand" href="/" id="homeLink" aria-label="SceneScribe home">
+        <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true">
+          <rect x="1" y="1" width="32" height="32" rx="10" fill="currentColor"/>
+          <path d="M12 22.4c2.1 1.1 4 1.6 5.7 1.6 2.5 0 4.1-1 4.1-2.7 0-1.5-1.1-2.3-3.7-3l-2-.6c-3.3-.9-5-2.5-5-5.1 0-3.3 2.8-5.4 6.9-5.4 1.8 0 3.7.4 5.5 1.2l-1 2.9c-1.6-.8-3.2-1.2-4.6-1.2-2.3 0-3.7.9-3.7 2.4 0 1.3.9 2 3.2 2.6l2 .5c3.6.9 5.5 2.7 5.5 5.6 0 3.5-2.8 5.7-7.3 5.7-2.2 0-4.4-.5-6.6-1.5l1-3z" fill="#f5f1e8"/>
+          <circle cx="26.5" cy="7.5" r="3.5" fill="#ff6b4a"/>
+        </svg>
+        <span class="brand-word">SceneScribe Studio</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Primary">
+        <a class="nav-link nav-link--forge" href="/?forge=1" id="navForge" data-open-forge>ClipForge</a>
+        <a class="nav-link" href="#how-it-works">How it reads</a>
+        <a class="nav-link" href="#privacy">Privacy</a>
+        <span class="local-pill" id="localPill">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="localPillText">On this device</span>
+        </span>
+      </nav>
+
+      <a class="header-new" id="headerNew" href="/" hidden>New video <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ───────────────────────────────────────────── Landing -->
+    <section class="view view--landing" id="landingView" data-view="landing">
+      <div class="shell hero">
+        <div class="hero-copy">
+          <p class="eyebrow hero-eyebrow">
+            <span class="eyebrow-rule" aria-hidden="true"></span>
+            Video caption studio
+            <span class="eyebrow-sep" aria-hidden="true">/</span>
+            Local-first
+          </p>
+          <h1 class="hero-title">Every frame<br>has something<br>to <em>say.</em></h1>
+          <p class="hero-lede">
+            SceneScribe watches the cut — the colour, the pacing, the on-screen words,
+            the voice — then writes six captions that sound like they came from
+            inside the edit.
+          </p>
+          <div class="hero-actions">
+            <a class="button button--primary button--lg" href="#upload">
+              Read a video
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="text-link" href="/?forge=1" id="heroForge" data-open-forge>
+              Make clips from a link
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <dl class="hero-facts">
+            <div><dt>6</dt><dd>caption directions</dd></div>
+            <div><dt>5</dt><dd>platform shapes</dd></div>
+            <div><dt>0</dt><dd>accounts or API keys</dd></div>
+          </dl>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-glow" aria-hidden="true"></div>
+          <div class="art-frame art-frame--back">
+            <img src="/static/demo/frame-shower.jpg" alt="" loading="eager">
+          </div>
+          <div class="art-frame art-frame--mid">
+            <img src="/static/demo/frame-hair.jpg" alt="" loading="eager">
+          </div>
+          <figure class="art-frame art-frame--main">
+            <div class="art-chrome">
+              <span class="art-dots"><i></i><i></i><i></i></span>
+              <span class="art-time">SCENE 07 <span>/</span> 00:07</span>
+            </div>
+            <img src="/static/demo/frame-hallway.jpg" alt="" loading="eager">
+            <figcaption class="art-caption">Smooth. Silky. Zero cap.</figcaption>
+          </figure>
+
+          <div class="art-read">
+            <div class="art-read-head">
+              <span>The read</span>
+              <span class="art-live"><i></i> live</span>
+            </div>
+            <p class="art-read-title">Vivid <em>&amp;</em> playful</p>
+            <div class="art-read-meta">
+              <span>Fast-cut</span><span>9 beats</span><span>8 sec</span>
+            </div>
+            <div class="art-wave" aria-hidden="true">
+              <i style="--h:.35"></i><i style="--h:.64"></i><i style="--h:.9"></i><i style="--h:.5"></i><i style="--h:.28"></i><i style="--h:.72"></i><i style="--h:.98"></i><i style="--h:.6"></i><i style="--h:.42"></i><i style="--h:.8"></i><i style="--h:.55"></i><i style="--h:.32"></i><i style="--h:.7"></i><i style="--h:.9"></i><i style="--h:.45"></i><i style="--h:.25"></i><i style="--h:.62"></i><i style="--h:.86"></i><i style="--h:.52"></i><i style="--h:.36"></i><i style="--h:.74"></i><i style="--h:.95"></i><i style="--h:.58"></i><i style="--h:.3"></i>
+            </div>
+            <div class="art-palette" aria-hidden="true">
+              <i class="swatch swatch--sand"></i>
+              <i class="swatch swatch--teal"></i>
+              <i class="swatch swatch--clay"></i>
+              <span>sand · teal · clay</span>
+            </div>
+          </div>
+
+          <div class="art-sticker">
+            <span>6 ways</span>
+            <em>to say it</em>
+          </div>
+        </div>
+      </div>
+
+      <div class="shell landing-body">
+        <section class="upload-section" id="upload" aria-labelledby="uploadTitle">
+          <div class="upload-card">
+            <div class="upload-card-top">
+              <span class="micro-label">Start here</span>
+              <span class="format-label">MP4 · MOV · WEBM · MKV</span>
+            </div>
+            <h2 class="upload-title" id="uploadTitle">Drop a cut.<br>Find the words.</h2>
+
+            <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Choose a video file to upload" aria-describedby="dropHint">
+              <input type="file" id="fileInput" accept=".mp4,.mov,.m4v,.webm,.mkv,.avi,video/mp4,video/quicktime,video/webm,video/x-matroska" hidden>
+              <div class="drop-idle" id="dropIdle">
+                <span class="drop-icon" aria-hidden="true">
+                  <svg viewBox="0 0 32 32"><path d="M7 21.5V24a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-2.5M16 20V5m0 0-5.5 5.5M16 5l5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="drop-copy">
+                  <strong>Drop your video here</strong>
+                  <span>or <span class="text-underline">browse files</span></span>
+                </span>
+                <span class="drop-hint" id="dropHint">Landscape, vertical, short or long — SceneScribe adapts to the cut.</span>
+              </div>
+
+              <div class="file-preview" id="filePreview" hidden>
+                <div class="file-thumb" id="fileThumb">
+                  <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="8" width="22" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m14 13 6 3-6 3v-6Z" fill="currentColor"/></svg>
+                </div>
+                <div class="file-copy">
+                  <strong class="file-name" id="fileName">video.mp4</strong>
+                  <span class="file-meta" id="fileMeta">Preparing preview…</span>
+                  <span class="file-change">Click to choose another</span>
+                </div>
+                <button class="icon-button file-clear" id="clearFile" type="button" aria-label="Remove selected file">
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5.5 5.5 9 9m0-9-9 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <p class="upload-error" id="uploadError" role="alert" hidden></p>
+
+            <div class="upload-foot">
+              <div class="upload-setting">
+                <span class="micro-label">Starting point</span>
+                <span class="setting-value"><span class="auto-spark" aria-hidden="true">✦</span> Auto-read tone</span>
+              </div>
+              <button class="button button--primary button--lg upload-submit" id="readButton" type="button" disabled>
+                <span id="readButtonLabel">Read this video</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <p class="upload-privacy">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="3.2" y="7" width="9.6" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+              Your video is analysed on this device. Nothing is sent to a third party.
+            </p>
+          </div>
+
+          <aside class="upload-aside" aria-label="How SceneScribe reads a video">
+            <div class="aside-step">
+              <span class="step-index">01</span>
+              <div>
+                <h3>It looks</h3>
+                <p>Frames, palette, contrast, and cutting rhythm — sampled across the whole edit.</p>
+              </div>
+            </div>
+            <div class="aside-step">
+              <span class="step-index">02</span>
+              <div>
+                <h3>It listens</h3>
+                <p>The audio bed, the voice, and the words already burned into the frame.</p>
+              </div>
+            </div>
+            <div class="aside-step">
+              <span class="step-index">03</span>
+              <div>
+                <h3>It writes</h3>
+                <p>Six directions, shaped by tone and platform. Pick one, edit it, take it with you.</p>
+              </div>
+            </div>
+            <div class="aside-local">
+              <span class="aside-local-icon" aria-hidden="true">
+                <svg viewBox="0 0 28 28"><path d="M14 3.5 23 7v6.6c0 5.2-3.5 9-9 10.9-5.5-1.9-9-5.7-9-10.9V7l9-3.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="m10 13.8 2.7 2.7 5.3-5.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div>
+                <strong>Private by default</strong>
+                <p>No account, no upload to a cloud, no training on your footage.</p>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="forge-band" aria-labelledby="forgeBandTitle">
+          <div class="forge-band-copy">
+            <p class="eyebrow eyebrow--light"><span class="eyebrow-rule" aria-hidden="true"></span> ClipForge joins the studio</p>
+            <h2 id="forgeBandTitle">Start with a link.<br><em>Leave with a clip deck.</em></h2>
+            <p>Send ClipForge a long YouTube or Twitch video. It finds the replayable moments and cuts them to shape — then SceneScribe writes the post copy for every clip.</p>
+            <a class="button button--light button--lg" href="/?forge=1" data-open-forge>
+              Forge clips from a link
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="forge-band-meta">
+              <span>YouTube + Twitch</span>
+              <span>Vertical, square, or wide</span>
+              <span>No cloud queue</span>
+            </div>
+          </div>
+          <div class="forge-band-visual" aria-hidden="true">
+            <div class="band-source">
+              <span class="band-source-kicker">Source / 42:18</span>
+              <span class="band-source-title">The full conversation</span>
+              <span class="band-source-track"><i></i></span>
+            </div>
+            <div class="band-clips">
+              <div class="band-clip band-clip--one"><span>01</span><i></i><b>00:12</b></div>
+              <div class="band-clip band-clip--two"><span>02</span><i></i><b>00:28</b></div>
+              <div class="band-clip band-clip--three"><span>03</span><i></i><b>00:41</b></div>
+            </div>
+            <span class="band-stamp">link <em>→</em> clips <em>→</em> words</span>
+          </div>
+        </section>
+
+        <section class="how-section" id="how-it-works" aria-labelledby="howTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span> The read</p>
+              <h2 id="howTitle">Not a generic caption.<br><em>A close reading.</em></h2>
+            </div>
+            <p class="section-intro">
+              Most caption tools only hear the words. SceneScribe reads the whole
+              edit, then finds the language that fits what is actually on screen.
+            </p>
+          </div>
+
+          <div class="how-grid">
+            <article class="how-card">
+              <div class="how-card-top">
+                <span class="how-number">01</span>
+                <span class="how-icon" aria-hidden="true">
+                  <svg viewBox="0 0 28 28"><rect x="3.5" y="6" width="21" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m3.5 9 10.5 8L24.5 9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="20.5" r="4.5" fill="var(--paper)"/><path d="M18 20.5h4m-2-2v4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+                </span>
+              </div>
+              <h3>It sees the frame</h3>
+              <p>Colour, brightness, contrast, motion, and cut pace become a visual profile — the mood behind the caption.</p>
+              <ul class="how-tags"><li>Palette</li><li>Pacing</li><li>Framing</li></ul>
+            </article>
+
+            <article class="how-card">
+              <div class="how-card-top">
+                <span class="how-number">02</span>
+                <span class="how-icon" aria-hidden="true">
+                  <svg viewBox="0 0 28 28"><path d="M5 14v-2m4 6V10m4 8V6m4 14V8m4 8v-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M3 22h22" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".35"/></svg>
+                </span>
+              </div>
+              <h3>It hears the edit</h3>
+              <p>The mix, the voice, and the on-screen copy are read together — so the caption knows what the video already says.</p>
+              <ul class="how-tags"><li>Speech</li><li>Sound</li><li>On-screen text</li></ul>
+            </article>
+
+            <article class="how-card">
+              <div class="how-card-top">
+                <span class="how-number">03</span>
+                <span class="how-icon" aria-hidden="true">
+                  <svg viewBox="0 0 28 28"><path d="M6 21.5c4.5-.5 6-2 7-5.5 1-3.5 3-6 5.5-8.5 1.5-1.5 3.5-1 4.5.5s.5 3.5-1 4.5c-2.4 1.6-5.5 2.5-9 3.5-3.5 1-5 2.5-5.5 7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 8.5h6M7 12h3.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".5"/></svg>
+                </span>
+              </div>
+              <h3>It writes the read</h3>
+              <p>A tone is chosen from the footage, then six caption directions are written — hook, story, quote, short, question, big idea.</p>
+              <ul class="how-tags"><li>Six directions</li><li>Tone-matched</li><li>Platform-aware</li></ul>
+            </article>
+          </div>
+
+          <div class="caption-preview" aria-label="Example caption directions">
+            <div class="caption-preview-head">
+              <span class="micro-label">A finished read</span>
+              <span class="caption-preview-meta">Beauty &amp; care · Playful · Instagram</span>
+            </div>
+            <div class="caption-preview-grid">
+              <article class="mini-caption mini-caption--feature">
+                <span class="mini-caption-label">Scroll-stopper <i>Recommended</i></span>
+                <p>“POV: your hair is NOT the vibe rn”</p>
+                <p class="mini-caption-sub">A little shine changes the whole frame.</p>
+                <div class="mini-caption-foot"><span>#flakeout #haircare #goodvibes</span><span>Copy →</span></div>
+              </article>
+              <article class="mini-caption">
+                <span class="mini-caption-label">The story</span>
+                <p>Sand and teal frames, doing their thing.</p>
+                <div class="mini-caption-foot"><span>Atmospheric</span><span>169 chars</span></div>
+              </article>
+              <article class="mini-caption">
+                <span class="mini-caption-label">Short &amp; sweet</span>
+                <p>Soft, strong, and completely yours.</p>
+                <div class="mini-caption-foot"><span>One line</span><span>108 chars</span></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="privacy-section" id="privacy" aria-labelledby="privacyTitle">
+          <div class="privacy-band">
+            <div class="privacy-lead">
+              <p class="eyebrow eyebrow--light"><span class="eyebrow-rule" aria-hidden="true"></span> Local by design</p>
+              <h2 id="privacyTitle">Your footage stays<br><em>your footage.</em></h2>
+              <p>Analysis runs on this machine. The video, the frames, the transcript, and the captions live in a local project folder — not in someone else’s cloud.</p>
+            </div>
+            <div class="privacy-details">
+              <dl class="privacy-list">
+                <div><dt>No account</dt><dd>Open the app and drop a file.</dd></div>
+                <div><dt>No API keys</dt><dd>The read is built from local models and your footage’s own signals.</dd></div>
+                <div><dt>Yours to delete</dt><dd>Every result is saved locally. Remove the job folder whenever you like.</dd></div>
+              </dl>
+              <div class="capability-row" aria-label="Local capabilities">
+                <span class="capability" id="capFfmpeg"><i></i> Video engine</span>
+                <span class="capability" id="capSpeech"><i></i> Speech</span>
+                <span class="capability" id="capOcr"><i></i> On-screen text</span>
+                <span class="capability" id="capClipforge"><i></i> ClipForge</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────────────── Processing -->
+    <section class="view view--process" id="processView" data-view="process" hidden>
+      <div class="shell process-shell">
+        <div class="process-main">
+          <p class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span> Reading the cut</p>
+          <h1 class="process-title" id="processTitle" tabindex="-1">Listening for<br>the <em>story.</em></h1>
+          <p class="process-message" id="processMessage" aria-live="polite">Warming up the projector</p>
+
+          <div class="progress-block">
+            <div class="progress-meta">
+              <span class="progress-percent" id="processPercent">0%</span>
+              <span class="progress-elapsed" id="processElapsed">Just starting</span>
+            </div>
+            <div class="progress-track" id="progressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Analysis progress">
+              <span class="progress-fill" id="progressFill"></span>
+            </div>
+          </div>
+
+          <ol class="stage-list" id="stageList" aria-label="Analysis stages">
+            <li data-stage="upload"><span class="stage-index">01</span><span class="stage-name">Upload</span><span class="stage-state">Waiting</span></li>
+            <li data-stage="probe"><span class="stage-index">02</span><span class="stage-name">Open the cut</span><span class="stage-state">Waiting</span></li>
+            <li data-stage="frames"><span class="stage-index">03</span><span class="stage-name">Read the frames</span><span class="stage-state">Waiting</span></li>
+            <li data-stage="onscreen"><span class="stage-index">04</span><span class="stage-name">Catch on-screen text</span><span class="stage-state">Waiting</span></li>
+            <li data-stage="audio"><span class="stage-index">05</span><span class="stage-name">Listen to the audio</span><span class="stage-state">Waiting</span></li>
+            <li data-stage="speech"><span class="stage-index">06</span><span class="stage-name">Find the words</span><span class="stage-state">Waiting</span></li>
+            <li data-stage="read"><span class="stage-index">07</span><span class="stage-name">Build the read</span><span class="stage-state">Waiting</span></li>
+            <li data-stage="write"><span class="stage-index">08</span><span class="stage-name">Write the captions</span><span class="stage-state">Waiting</span></li>
+          </ol>
+
+          <div class="process-actions">
+            <button class="text-button" id="processStartOver" type="button">Cancel and start over</button>
+          </div>
+        </div>
+
+        <aside class="process-aside" aria-label="Current file">
+          <div class="process-file">
+            <div class="process-file-thumb" id="processThumb">
+              <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="8" width="22" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m14 13 6 3-6 3v-6Z" fill="currentColor"/></svg>
+            </div>
+            <div class="process-file-copy">
+              <strong id="processFileName">Your video</strong>
+              <span id="processFileMeta">Preparing the read</span>
+            </div>
+            <span class="local-chip"><i></i> Local</span>
+          </div>
+
+          <div class="process-art" aria-hidden="true">
+            <div class="process-art-card process-art-card--back"><span></span><span></span><span></span></div>
+            <div class="process-art-card process-art-card--mid"><span></span><span></span><span></span></div>
+            <div class="process-art-card process-art-card--front">
+              <span class="process-art-kicker">The read</span>
+              <span class="process-art-line process-art-line--long"></span>
+              <span class="process-art-line"></span>
+              <span class="process-art-line process-art-line--short"></span>
+              <div class="process-art-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+
+          <div class="process-note">
+            <span class="process-note-icon" aria-hidden="true">✳</span>
+            <p>The first read takes a little longer while the local speech model wakes up. Short clips are usually ready in under a minute.</p>
+          </div>
+
+          <div class="process-error" id="processError" role="alert" hidden>
+            <strong>The read stopped short.</strong>
+            <p id="processErrorText">Something went wrong while reading this video.</p>
+            <div class="process-error-actions">
+              <button class="button button--primary" id="errorReset" type="button">Choose another video</button>
+              <button class="text-button" id="errorRetry" type="button" hidden>Try the link again</button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────────────── ClipForge -->
+    <section class="view view--forge" id="forgeView" data-view="forge" hidden>
+      <div class="shell forge-shell">
+        <header class="forge-hero">
+          <div class="forge-heading">
+            <a class="back-link forge-back" href="/" id="forgeHomeLink"><span aria-hidden="true">←</span> Caption studio</a>
+            <p class="eyebrow">
+              <span class="eyebrow-rule" aria-hidden="true"></span>
+              ClipForge
+              <span class="eyebrow-sep" aria-hidden="true">/</span>
+              Integrated clip engine
+            </p>
+            <h1 class="forge-title" id="forgeTitle" tabindex="-1">Long cut.<br>Short clips.<br><em>Right words.</em></h1>
+            <p class="forge-lede">
+              Paste a YouTube or Twitch link. ClipForge finds the moments worth replaying,
+              cuts them to shape, and lays them out in a clip deck. Pick one and SceneScribe
+              writes the captions.
+            </p>
+            <div class="forge-route" aria-label="The ClipForge workflow">
+              <span><b>01</b> Paste a link</span>
+              <i aria-hidden="true"></i>
+              <span><b>02</b> Review the clips</span>
+              <i aria-hidden="true"></i>
+              <span><b>03</b> Write the captions</span>
+            </div>
+          </div>
+
+          <aside class="forge-engine-card" aria-label="ClipForge engine status">
+            <div class="forge-engine-head">
+              <span class="micro-label">ClipForge engine</span>
+              <span class="forge-engine-status" id="forgeEngineStatus">Checking…</span>
+            </div>
+            <p class="forge-engine-reason" id="forgeEngineReason">Checking the local ClipForge install.</p>
+            <dl class="forge-engine-facts">
+              <div><dt>Input</dt><dd>YouTube · Twitch · local path</dd></div>
+              <div><dt>Output</dt><dd>MP4 clips + thumbnails</dd></div>
+              <div><dt>Privacy</dt><dd>Footage and cookies stay on this device</dd></div>
+            </dl>
+            <p class="forge-engine-note">
+              ClipForge runs in its own virtual environment. Nothing is uploaded to a
+              cloud service by SceneScribe.
+            </p>
+          </aside>
+        </header>
+
+        <div class="forge-workspace" id="forgeWorkspace">
+          <section class="forge-form-panel" aria-labelledby="forgeFormTitle">
+            <div class="forge-form-head">
+              <div>
+                <span class="micro-label">The brief</span>
+                <h2 id="forgeFormTitle">Choose the shape of the cut.</h2>
+              </div>
+              <span class="local-tag"><i aria-hidden="true"></i> Local run</span>
+            </div>
+
+            <form id="forgeForm" novalidate>
+              <label class="forge-field forge-field--source" for="forgeSource">
+                <span class="forge-label">Video link <em>YouTube or Twitch</em></span>
+                <span class="forge-input">
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M8.4 11.6a3.2 3.2 0 0 0 4.6 0l2.1-2.1a3.2 3.2 0 0 0-4.6-4.6L9.4 6" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path d="M11.6 8.4a3.2 3.2 0 0 0-4.6 0l-2.1 2.1a3.2 3.2 0 0 0 4.6 4.6l1.1-1.1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+                  <input id="forgeSource" name="source" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://www.youtube.com/watch?v=…" required>
+                </span>
+                <small>Already have a file open? Paste an absolute local video path instead.</small>
+              </label>
+
+              <div class="forge-fields">
+                <label class="forge-select" for="forgeCount">
+                  <span>Clips</span>
+                  <select id="forgeCount">
+                    <option value="1">1 clip</option>
+                    <option value="2">2 clips</option>
+                    <option value="3" selected>3 clips</option>
+                    <option value="4">4 clips</option>
+                    <option value="5">5 clips</option>
+                    <option value="6">6 clips</option>
+                    <option value="8">8 clips</option>
+                    <option value="10">10 clips</option>
+                  </select>
+                </label>
+                <label class="forge-select" for="forgeLength">
+                  <span>Length</span>
+                  <select id="forgeLength">
+                    <option value="15">15 sec</option>
+                    <option value="30" selected>30 sec</option>
+                    <option value="45">45 sec</option>
+                    <option value="60">60 sec</option>
+                    <option value="90">90 sec</option>
+                  </select>
+                </label>
+                <label class="forge-select" for="forgeAspect">
+                  <span>Shape</span>
+                  <select id="forgeAspect">
+                    <option value="9:16" selected>Vertical 9:16</option>
+                    <option value="1:1">Square 1:1</option>
+                    <option value="16:9">Landscape 16:9</option>
+                  </select>
+                </label>
+                <label class="forge-select" for="forgeReframe">
+                  <span>Framing</span>
+                  <select id="forgeReframe">
+                    <option value="blur" selected>Blurred fill</option>
+                    <option value="crop">Crop to fill</option>
+                    <option value="pad">Black bars</option>
+                  </select>
+                </label>
+              </div>
+
+              <label class="forge-toggle" for="forgeCaptions">
+                <input id="forgeCaptions" type="checkbox">
+                <span class="forge-toggle-track" aria-hidden="true"><i></i></span>
+                <span class="forge-toggle-copy">
+                  <strong>Burn speech captions</strong>
+                  <small>ClipForge transcribes the clip and burns word-timed subtitles into the MP4.</small>
+                </span>
+              </label>
+
+              <details class="forge-advanced">
+                <summary>More controls <span aria-hidden="true">+</span></summary>
+                <div class="forge-advanced-body">
+                  <label class="forge-field" for="forgeHook">
+                    <span class="forge-label">Hook line <em>optional</em></span>
+                    <input id="forgeHook" type="text" maxlength="120" placeholder="Text stamped at the top of every clip">
+                  </label>
+                  <label class="forge-select" for="forgeMode">
+                    <span>Find moments with</span>
+                    <select id="forgeMode">
+                      <option value="auto" selected>Auto — heatmap when available</option>
+                      <option value="hybrid">Heatmap + audio</option>
+                      <option value="heatmap">YouTube heatmap</option>
+                      <option value="audio">Audio excitement</option>
+                    </select>
+                  </label>
+                </div>
+              </details>
+
+              <p class="forge-error" id="forgeError" role="alert" hidden></p>
+
+              <div class="forge-submit-row">
+                <p class="forge-local-note">
+                  <svg viewBox="0 0 18 18" aria-hidden="true"><rect x="4" y="8" width="10" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M6.3 8V6a2.7 2.7 0 0 1 5.4 0v2" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+                  ClipForge runs locally. YouTube and Twitch links still need a network connection.
+                </p>
+                <button class="button button--ink button--lg forge-submit" id="forgeSubmit" type="submit">
+                  <span id="forgeSubmitLabel">Forge clips</span>
+                  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M10.5 5.5 15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <aside class="forge-aside" aria-label="What ClipForge will do">
+            <div class="forge-aside-head">
+              <span class="micro-label">In the deck</span>
+              <span class="forge-aside-mark" aria-hidden="true">✳</span>
+            </div>
+            <ol class="forge-promise-list">
+              <li>
+                <span class="step-index">01</span>
+                <div><strong>Find the replayable moment</strong><p>YouTube’s most-replayed heatmap or audio excitement, depending on the source.</p></div>
+              </li>
+              <li>
+                <span class="step-index">02</span>
+                <div><strong>Cut, reframe, finish</strong><p>Each clip lands in the shape you pick, with thumbnails and metadata beside it.</p></div>
+              </li>
+              <li>
+                <span class="step-index">03</span>
+                <div><strong>Read each clip</strong><p>The clip opens in the SceneScribe studio, ready for six directions and a platform.</p></div>
+              </li>
+            </ol>
+            <div class="forge-aside-tip">
+              <span aria-hidden="true">→</span>
+              <p>Leave <strong>burn speech captions</strong> off if you want SceneScribe to read the clean frames first.</p>
+            </div>
+          </aside>
+        </div>
+
+        <section class="forge-progress" id="forgeProgress" aria-labelledby="forgeProgressTitle" hidden>
+          <div class="forge-progress-head">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span> ClipForge at work</p>
+              <h2 id="forgeProgressTitle">Making the short list.</h2>
+              <p class="forge-progress-message" id="forgeProgressMessage" aria-live="polite">Waking up ClipForge</p>
+            </div>
+            <button class="text-button" id="forgeCancel" type="button">Stop this run</button>
+          </div>
+
+          <div class="forge-progress-meta">
+            <span class="progress-percent" id="forgePercent">0%</span>
+            <span id="forgeElapsed">Just starting</span>
+          </div>
+          <div class="progress-track forge-progress-track" id="forgeProgressBar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="ClipForge progress">
+            <span class="progress-fill" id="forgeProgressFill"></span>
+          </div>
+
+          <ol class="forge-stage-list" id="forgeStageList" aria-label="ClipForge stages">
+            <li data-forge-stage="source"><span class="stage-index">01</span><span><strong>Open the source</strong><small>Link, download, and probe</small></span><span class="stage-state">Waiting</span></li>
+            <li data-forge-stage="moments"><span class="stage-index">02</span><span><strong>Find the moments</strong><small>Heatmap or audio signal</small></span><span class="stage-state">Waiting</span></li>
+            <li data-forge-stage="render"><span class="stage-index">03</span><span><strong>Cut and reframe</strong><small>Render the vertical clips</small></span><span class="stage-state">Waiting</span></li>
+            <li data-forge-stage="package"><span class="stage-index">04</span><span><strong>Package the deck</strong><small>Thumbnails and metadata</small></span><span class="stage-state">Waiting</span></li>
+          </ol>
+
+          <div class="forge-console">
+            <div class="forge-console-head">
+              <span><i aria-hidden="true"></i> ClipForge output</span>
+              <span>live log</span>
+            </div>
+            <pre id="forgeLog" tabindex="0">Waiting for ClipForge…</pre>
+          </div>
+
+          <div class="forge-run-error" id="forgeRunError" role="alert" hidden>
+            <strong id="forgeRunErrorTitle">The clip run stopped short.</strong>
+            <p id="forgeRunErrorText">ClipForge could not finish this source.</p>
+            <div class="forge-run-error-actions">
+              <button class="button button--primary" id="forgeRetry" type="button">Try again</button>
+              <button class="text-button" id="forgeBackToForm" type="button">Change the setup</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="forge-results" id="forgeResults" aria-labelledby="forgeResultsTitle" hidden>
+          <div class="forge-results-head">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span> The clip deck</p>
+              <h2 id="forgeResultsTitle" tabindex="-1">Ready for their words.</h2>
+              <p class="forge-results-meta" id="forgeResultsMeta"></p>
+            </div>
+            <div class="forge-results-actions">
+              <button class="button button--ghost button--sm" id="forgeOpenFolder" type="button">Open output folder</button>
+              <button class="button button--primary button--sm" id="forgeAgain" type="button">Forge another</button>
+            </div>
+          </div>
+          <div class="clip-deck" id="clipDeckGrid"></div>
+          <div class="forge-results-foot">
+            <span><i class="foot-dot" aria-hidden="true"></i> Each clip keeps its video, thumbnail, and ClipForge metadata in the local run folder.</span>
+            <span>Pick a clip to start writing.</span>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ───────────────────────────────────────────── Studio -->
+    <section class="view view--studio" id="studioView" data-view="studio" hidden>
+      <div class="shell studio-shell">
+        <header class="studio-header">
+          <div class="studio-heading">
+            <div class="studio-back-links">
+              <a class="back-link" href="/" data-new-video><span aria-hidden="true">←</span> New video</a>
+              <a class="back-link" id="studioDeckLink" href="/" hidden><span aria-hidden="true">←</span> Back to clip deck</a>
+            </div>
+            <h1 class="studio-title" id="studioTitle" tabindex="-1">Your video</h1>
+            <div class="studio-meta" id="studioMeta"></div>
+          </div>
+          <div class="studio-actions">
+            <button class="button button--ghost button--sm" id="shareButton" type="button">
+              <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M7.5 10.5 13 5m0 0H9m4 0v4M14 11v2.5a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 3 13.5v-8A1.5 1.5 0 0 1 4.5 4H7" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Copy link
+            </button>
+            <a class="button button--ghost button--sm" id="downloadVideo" href="#" download>
+              <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v8m0 0 3-3m-3 3L6 8M4 14h10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Video
+            </a>
+            <a class="button button--ink button--sm" href="/" data-new-video>New video <span aria-hidden="true">↗</span></a>
+          </div>
+        </header>
+
+        <div class="studio-grid">
+          <section class="video-panel" aria-label="Video and visual read">
+            <div class="video-frame" id="videoFrame">
+              <video id="videoPlayer" controls playsinline preload="metadata"></video>
+              <div class="video-watermark" aria-hidden="true">SceneScribe</div>
+              <div class="video-pace" id="videoPace">Reading pace</div>
+            </div>
+
+            <div class="filmstrip-wrap">
+              <div class="filmstrip-head">
+                <span class="micro-label">Frame study</span>
+                <span class="filmstrip-count" id="frameCount">— frames</span>
+              </div>
+              <div class="frame-rail" id="frameRail" role="group" aria-label="Sampled frames. Select one to jump the video."></div>
+            </div>
+
+            <div class="look-strip">
+              <div class="palette-block">
+                <span class="micro-label">Palette</span>
+                <div class="palette-list" id="paletteList"></div>
+              </div>
+              <div class="specs" id="specs"></div>
+            </div>
+          </section>
+
+          <aside class="read-panel" aria-labelledby="readTitle">
+            <div class="read-panel-head">
+              <h2 class="read-title" id="readTitle">The read</h2>
+              <span class="mood-badge" id="moodBadge">—</span>
+            </div>
+            <p class="read-summary" id="readSummary"></p>
+
+            <div class="signal-grid" id="signalGrid"></div>
+
+            <blockquote class="quote-block" id="quoteBlock" hidden>
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p id="quoteText"></p>
+              <footer id="quoteSource"></footer>
+            </blockquote>
+
+            <div class="keyword-block">
+              <span class="micro-label">What it noticed</span>
+              <div class="keyword-row" id="keywordRow"></div>
+            </div>
+
+            <div class="details-group">
+              <details class="detail" id="onscreenDetails">
+                <summary>
+                  <span class="detail-title">On-screen text</span>
+                  <span class="detail-count" id="onscreenCount">—</span>
+                </summary>
+                <div class="detail-body" id="onscreenList"></div>
+              </details>
+              <details class="detail">
+                <summary>
+                  <span class="detail-title">Transcript</span>
+                  <span class="detail-count" id="transcriptQuality">—</span>
+                </summary>
+                <div class="detail-body" id="transcriptList"></div>
+              </details>
+            </div>
+
+            <div class="warning-note" id="warningNote" hidden>
+              <span class="warning-icon" aria-hidden="true">i</span>
+              <div id="warningText"></div>
+            </div>
+          </aside>
+        </div>
+
+        <section class="caption-studio" aria-labelledby="captionTitle">
+          <div class="caption-head">
+            <div class="caption-heading">
+              <p class="eyebrow"><span class="eyebrow-rule" aria-hidden="true"></span> Your captions</p>
+              <h2 id="captionTitle">Six ways to <em>say it.</em></h2>
+              <p class="caption-note" id="toneNote">Read from the video’s own mood, pace, and copy.</p>
+            </div>
+            <div class="caption-controls">
+              <label class="select-field">
+                <span>Tone</span>
+                <select id="toneSelect"></select>
+              </label>
+              <label class="select-field">
+                <span>Platform</span>
+                <select id="platformSelect"></select>
+              </label>
+              <button class="button button--ink remix-button" id="remixButton" type="button">
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6.5h3.2c1.2 0 2.3.6 3 1.5l1.6 2c.7.9 1.8 1.5 3 1.5H17m0 0-2.5-2.5M17 11.5l-2.5 2.5M3 13.5h3.2c1.2 0 2.3-.6 3-1.5l.6-.8M17 6.5h-3.8c-1.2 0-2.3.6-3 1.5l-.6.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Remix</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="selection-bar">
+            <div class="selection-info">
+              <span id="selectionLabel">Select a direction</span>
+              <span class="selection-divider" aria-hidden="true">·</span>
+              <span id="selectionCount">—</span>
+            </div>
+            <div class="selection-actions">
+              <button class="button button--ghost button--sm" id="copySelected" type="button">
+                <svg viewBox="0 0 18 18" aria-hidden="true"><rect x="6" y="6" width="8" height="8" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M12 6V4.6A1.6 1.6 0 0 0 10.4 3H4.6A1.6 1.6 0 0 0 3 4.6v5.8A1.6 1.6 0 0 0 4.6 12H6" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+                Copy
+              </button>
+              <button class="button button--ghost button--sm" id="exportCaptions" type="button">
+                <svg viewBox="0 0 18 18" aria-hidden="true"><path d="M9 3v8m0 0 3-3m-3 3L6 8M4 14h10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Export all .txt
+              </button>
+            </div>
+          </div>
+
+          <div class="caption-grid" id="captionGrid" aria-live="polite"></div>
+
+          <div class="caption-foot">
+            <span><i class="foot-dot" aria-hidden="true"></i> Read locally from frames, sound, speech, and on-screen text.</span>
+            <span id="generatedLabel"></span>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="siteFooter">
+    <div class="shell footer-inner">
+      <div class="footer-brand">
+        <span class="footer-mark" aria-hidden="true">S</span>
+        <div><strong>SceneScribe Studio</strong><span>A closer read of the cut.</span></div>
+      </div>
+      <div class="footer-meta">
+        <span>SceneScribe Studio</span>
+        <span class="footer-dot" aria-hidden="true">·</span>
+        <span>local clips, local captions</span>
+        <span class="footer-dot" aria-hidden="true">·</span>
+        <span id="appVersion">v1.0.0</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+    <span class="toast-dot" aria-hidden="true"></span>
+    <span id="toastText"></span>
+  </div>
+</body>
+</html>
